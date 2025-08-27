@@ -1,6 +1,7 @@
 public class Ui {
-    public static final int WIDTH     = 58;
-    public static final String DIV    = "─".repeat(WIDTH);
+    public static final int WIDTH = 58;
+    public static final String DIV = "─".repeat(WIDTH);
+    public static final String PROMPT = "➤ ";
 
     public static void showGreeting(String name) {
         showDivider();
@@ -17,6 +18,4 @@ public class Ui {
     public static void showDivider() {
         System.out.println(DIV);
     }
-
-
 }
