@@ -1,14 +1,26 @@
+import java.util.Scanner;
+
 public class Penguin {
-    private static final String LINE = "____________________________________________________________";
+    static final String NAME = "Penguin";
+    static final String PROMPT = "➤ ";
 
     public static void main(String[] args) {
-        String chatbotName = "Penguin";
 
-        System.out.println(LINE);
-        System.out.println("Hello! I'm " + chatbotName);
-        System.out.println("What can I do for you?");
-        System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        Scanner in = new Scanner(System.in);
+        Ui.showGreeting(NAME);
+
+        while (true) {
+            System.out.print(PROMPT);
+            String line = in.nextLine().trim();
+            Ui.showDivider();
+            if (line.equalsIgnoreCase("bye")){
+                Ui.showBye();
+                break;
+            }
+            else {
+                System.out.println(line);
+            }
+            Ui.showDivider();
+        }
     }
 }
