@@ -7,6 +7,7 @@ public class Penguin {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
+        TaskList taskList = new TaskList();
         Ui.showGreeting(NAME);
 
         while (true) {
@@ -17,8 +18,11 @@ public class Penguin {
                 Ui.showBye();
                 break;
             }
+            else if (line.equalsIgnoreCase("list")){
+                taskList.listTasks();
+            }
             else {
-                System.out.println(line);
+                taskList.addTask(line);
             }
             Ui.showDivider();
         }
