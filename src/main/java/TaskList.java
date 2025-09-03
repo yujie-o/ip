@@ -1,31 +1,45 @@
-import java.util.ArrayList;
-
 public class TaskList {
-    private final ArrayList<Task> tasks = new ArrayList<>();
+    private static final int CAPACITY = 100;
+    private final Task[] tasks = new Task[CAPACITY];
+    private int count = 0; // number of tasks currently stored
 
     private boolean outOfRange(int index) {
-        return index < 0 || index >= tasks.size();
+        return index < 0 || index >= count;
     }
 
-    public void addTask(String line) {
-        Task t = new Task(line);
-        tasks.add(t);
-        System.out.println("added: " + line);
+    public void addTask(Task t) {
+        if (count >= CAPACITY) {
+            System.out.println("⚠️ Sorry, task list is full (" + CAPACITY + ").");
+            return;
+        }
+        tasks[count++] = t;
     }
+
+    public int size() {
+        return count;
+    }
+
+    // --- Queries ---
 
     public void listTasks() {
+        if (count == 0) {
+            System.out.println("Your task list is empty.");
+            return;
+        }
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+        for (int i = 0; i < count; i++) {
+            System.out.println((i + 1) + ". " + tasks[i]);
         }
     }
+
+    // --- Updates ---
 
     public void markTask(int index) {
         if (outOfRange(index)) {
             System.out.println("⚠️ There is no such task number.");
             return;
         }
-        Task t = tasks.get(index);
+        Task t = tasks[index];
         if (t.isDone) {
             System.out.println("⚠️ Task " + (index + 1) + " is already marked as done.");
         } else {
@@ -40,7 +54,7 @@ public class TaskList {
             System.out.println("⚠️ There is no such task number.");
             return;
         }
-        Task t = tasks.get(index);
+        Task t = tasks[index];
         if (t.isDone) {
             t.markNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
