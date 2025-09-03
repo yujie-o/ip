@@ -1,7 +1,7 @@
 public class TaskList {
     private static final int CAPACITY = 100;
     private final Task[] tasks = new Task[CAPACITY];
-    private int count = 0; // number of tasks currently stored
+    private int count = 0;
 
     private boolean outOfRange(int index) {
         return index < 0 || index >= count;

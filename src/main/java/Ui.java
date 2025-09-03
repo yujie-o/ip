@@ -50,6 +50,14 @@ public class Ui {
         System.out.println("      Exit the program.\n");
     }
 
+    public static void showUsage(String msg) {
+        System.out.println("Usage: " + msg);
+    }
+
+    public static void showTodoEmpty() {
+        System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+    }
+
 
     public static void showDivider() {
         System.out.println(DIV);

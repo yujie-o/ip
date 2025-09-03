@@ -1,76 +1,122 @@
 import java.util.Scanner;
 
 public class Penguin {
-    static final String NAME = "Penguin";
+    private static final String NAME = "Penguin";
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
         TaskList taskList = new TaskList();
         Ui.showGreeting(NAME);
-        while (true) {
-            System.out.print(Ui.PROMPT);
-            String line = in.nextLine().trim();
-            Ui.showDivider();
-            if (line.equalsIgnoreCase("bye")) {
-                Ui.showBye();
-                break;
-            } else if (line.equalsIgnoreCase("list")) {
-                taskList.listTasks();
-            } else if (line.equalsIgnoreCase("mark")) {
-                System.out.println("Usage: mark <task-number>");
-            } else if (line.toLowerCase().startsWith("mark")) {
-                String[] parts = line.split("\\s+");
-                try {
-                    taskList.markTask(Integer.parseInt(parts[1]) - 1);
-                } catch (NumberFormatException e) {
-                    System.out.println("Task number must be an integer.");
+
+        try (Scanner in = new Scanner(System.in)) {
+            while (true) {
+                System.out.print(Ui.PROMPT);
+                String input = in.nextLine().trim();
+                Ui.showDivider();
+
+                if (input.isEmpty()) {
+                    Ui.showManual();
+                    Ui.showDivider();
+                    continue;
                 }
-            } else if (line.equalsIgnoreCase("unmark")) {
-                System.out.println("Usage: unmark <task-number>");
-            } else if (line.toLowerCase().startsWith("unmark")) {
-                String[] parts = line.split("\\s+");
-                try {
-                    taskList.unmarkTask(Integer.parseInt(parts[1]) - 1);
-                } catch (NumberFormatException e) {
-                    System.out.println("Task number must be an integer.");
+
+                String[] tokens = input.split("\\s+", 2);
+                String command = tokens[0].toLowerCase();
+                String payload = tokens.length > 1 ? tokens[1] : "";
+
+                switch (command) {
+                case "bye":
+                    Ui.showBye();
+                    return;
+
+                case "list":
+                    taskList.listTasks();
+                    break;
+
+                case "mark": {
+                    if (payload.isBlank()) {
+                        Ui.showUsage("mark <task-number>");
+                        break;
+                    }
+                    int index = parseIndexOrNegOne(payload);
+                    if (index < 0) {
+                        Ui.showUsage("mark <task-number>");
+                        break;
+                    }
+                    taskList.markTask(index);
+                    break;
                 }
-            } else if (line.toLowerCase().startsWith("todo")) {
-                String desc = line.substring(4).trim();
-                if (desc.isEmpty()) {
-                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
-                } else {
-                    ToDo todo = new ToDo(desc);
+
+                case "unmark": {
+                    if (payload.isBlank()) {
+                        Ui.showUsage("unmark <task-number>");
+                        break;
+                    }
+                    int index = parseIndexOrNegOne(payload);
+                    if (index < 0) {
+                        Ui.showUsage("unmark <task-number>");
+                        break;
+                    }
+                    taskList.unmarkTask(index);
+                    break;
+                }
+
+                case "todo": {
+                    String description = payload.trim();
+                    if (description.isEmpty()) {
+                        Ui.showTodoEmpty();
+                        break;
+                    }
+                    ToDo todo = new ToDo(description);
                     taskList.addTask(todo);
                     Ui.showAdded(todo, taskList.size());
+                    break;
                 }
-            } else if (line.toLowerCase().startsWith("deadline")) {
-                String[] parts = line.substring(8).trim().split("/by", 2);
-                if (parts.length < 2) {
-                    System.out.println("Usage: deadline <description> /by <when>");
-                } else {
-                    Deadline dl = new Deadline(parts[0].trim(), parts[1].trim());
-                    taskList.addTask(dl);
-                    Ui.showAdded(dl, taskList.size());
-                }
-            } else if (line.toLowerCase().startsWith("event")) {
-                String[] parts = line.substring(5).trim().split("/from", 2);
-                if (parts.length < 2) {
-                    System.out.println("Usage: event <description> /from <start> /to <end>");
-                } else {
-                    String desc = parts[0].trim();
-                    String[] times = parts[1].split("/to", 2);
-                    if (times.length < 2) {
-                        System.out.println("Usage: event <description> /from <start> /to <end>");
-                    } else {
-                        Event ev = new Event(desc, times[0].trim(), times[1].trim());
-                        taskList.addTask(ev);
-                        Ui.showAdded(ev, taskList.size());
+
+                case "deadline": {
+                    String[] byTokens = payload.split("\\s*/by\\s*", 2);
+                    if (byTokens.length < 2 || byTokens[0].isBlank() || byTokens[1].isBlank()) {
+                        Ui.showUsage("deadline <description> /by <when>");
+                        break;
                     }
+                    Deadline deadline = new Deadline(byTokens[0].trim(), byTokens[1].trim());
+                    taskList.addTask(deadline);
+                    Ui.showAdded(deadline, taskList.size());
+                    break;
                 }
-            } else {
-                Ui.showManual();
+
+                case "event": {
+                    String[] fromTokens = payload.split("\\s*/from\\s*", 2);
+                    if (fromTokens.length < 2 || fromTokens[0].isBlank()) {
+                        Ui.showUsage("event <description> /from <start> /to <end>");
+                        break;
+                    }
+                    String description = fromTokens[0].trim();
+                    String[] startEndTokens = fromTokens[1].split("\\s*/to\\s*", 2);
+                    if (startEndTokens.length < 2 || startEndTokens[0].isBlank() || startEndTokens[1].isBlank()) {
+                        Ui.showUsage("event <description> /from <start> /to <end>");
+                        break;
+                    }
+                    Event eventTask = new Event(description, startEndTokens[0].trim(), startEndTokens[1].trim());
+                    taskList.addTask(eventTask);
+                    Ui.showAdded(eventTask, taskList.size());
+                    break;
+                }
+
+                default:
+                    Ui.showManual();
+                }
+
+                Ui.showDivider();
             }
-            Ui.showDivider();
+        }
+    }
+
+    // helper method used by mark/unmark
+    private static int parseIndexOrNegOne(String token) {
+        try {
+            return Integer.parseInt(token) - 1;
+        } catch (NumberFormatException e) {
+            return -1;
         }
     }
 }
