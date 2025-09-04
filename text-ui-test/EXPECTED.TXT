@@ -1,6 +1,105 @@
-Hello from
- ____        _
-|  _ \ _   _| | _____
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+──────────────────────────────────────────────────────────
+Hello! I'm Penguin.
+What can I do for you?
+──────────────────────────────────────────────────────────
+➤ hello
+──────────────────────────────────────────────────────────
+☹ OOPS!!! I don't understand that command.
+Here are the commands you can use:
+
+  todo <description>
+      Adds a ToDo task.
+      Example: todo borrow book
+
+  deadline <description> /by <time>
+      Adds a Deadline task.
+      Example: deadline return book /by Sunday
+
+  event <description> /from <start> /to <end>
+      Adds an Event task.
+      Example: event project meeting /from Mon 2pm /to 4pm
+
+  list
+      Show all tasks in the list.
+
+  mark <task-number>
+      Mark a task as done.
+
+  unmark <task-number>
+      Mark a task as not done.
+
+  bye
+      Exit the program.
+
+──────────────────────────────────────────────────────────
+➤ todo EE2213 Tutorial
+──────────────────────────────────────────────────────────
+Got it. I've added this task:
+  [T][ ] EE2213 Tutorial
+Now you have 1 tasks in the list.
+──────────────────────────────────────────────────────────
+➤ event Kayaking /from 8am /to 2pm
+──────────────────────────────────────────────────────────
+Got it. I've added this task:
+  [E][ ] Kayaking (from: 8am to: 2pm)
+Now you have 2 tasks in the list.
+──────────────────────────────────────────────────────────
+➤ list
+──────────────────────────────────────────────────────────
+Here are the tasks in your list:
+1. [T][ ] EE2213 Tutorial
+2. [E][ ] Kayaking (from: 8am to: 2pm)
+──────────────────────────────────────────────────────────
+➤ deadline CG2028 Assignment /by Fri 2359
+──────────────────────────────────────────────────────────
+Got it. I've added this task:
+  [D][ ] CG2028 Assignment (by: Fri 2359)
+Now you have 3 tasks in the list.
+──────────────────────────────────────────────────────────
+➤ list
+──────────────────────────────────────────────────────────
+Here are the tasks in your list:
+1. [T][ ] EE2213 Tutorial
+2. [E][ ] Kayaking (from: 8am to: 2pm)
+3. [D][ ] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ mark 2
+──────────────────────────────────────────────────────────
+Nice! I've marked this task as done:
+ [E][X] Kayaking (from: 8am to: 2pm)
+──────────────────────────────────────────────────────────
+➤ list
+──────────────────────────────────────────────────────────
+Here are the tasks in your list:
+1. [T][ ] EE2213 Tutorial
+2. [E][X] Kayaking (from: 8am to: 2pm)
+3. [D][ ] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ mark 3
+──────────────────────────────────────────────────────────
+Nice! I've marked this task as done:
+ [D][X] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ list
+──────────────────────────────────────────────────────────
+Here are the tasks in your list:
+1. [T][ ] EE2213 Tutorial
+2. [E][X] Kayaking (from: 8am to: 2pm)
+3. [D][X] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ unmark 3
+──────────────────────────────────────────────────────────
+OK, I've marked this task as not done yet:
+ [D][ ] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ list
+──────────────────────────────────────────────────────────
+Here are the tasks in your list:
+1. [T][ ] EE2213 Tutorial
+2. [E][X] Kayaking (from: 8am to: 2pm)
+3. [D][ ] CG2028 Assignment (by: Fri 2359)
+──────────────────────────────────────────────────────────
+➤ bye
+──────────────────────────────────────────────────────────
+Bye. Hope to see you again soon!
+──────────────────────────────────────────────────────────

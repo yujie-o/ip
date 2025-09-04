@@ -9,7 +9,7 @@ public class TaskList {
 
     public void addTask(Task t) {
         if (count >= CAPACITY) {
-            System.out.println("⚠️ Sorry, task list is full (" + CAPACITY + ").");
+            System.out.println("⚠ Sorry, task list is full (" + CAPACITY + ").");
             return;
         }
         tasks[count++] = t;
@@ -36,12 +36,12 @@ public class TaskList {
 
     public void markTask(int index) {
         if (outOfRange(index)) {
-            System.out.println("⚠️ There is no such task number.");
+            System.out.println("⚠ There is no such task number.");
             return;
         }
         Task t = tasks[index];
         if (t.isDone) {
-            System.out.println("⚠️ Task " + (index + 1) + " is already marked as done.");
+            System.out.println("⚠ Task " + (index + 1) + " is already marked as done.");
         } else {
             t.markDone();
             System.out.println("Nice! I've marked this task as done:");
@@ -51,7 +51,7 @@ public class TaskList {
 
     public void unmarkTask(int index) {
         if (outOfRange(index)) {
-            System.out.println("⚠️ There is no such task number.");
+            System.out.println("⚠ There is no such task number.");
             return;
         }
         Task t = tasks[index];
@@ -60,7 +60,7 @@ public class TaskList {
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(" " + t);
         } else {
-            System.out.println("⚠️ Task " + (index + 1) + " is already marked as undone.");
+            System.out.println("⚠ Task " + (index + 1) + " is already marked as undone.");
         }
     }
 }

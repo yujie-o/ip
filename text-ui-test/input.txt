@@ -1,0 +1,13 @@
+hello
+todo EE2213 Tutorial
+event Kayaking /from 8am /to 2pm
+list
+deadline CG2028 Assignment /by Fri 2359
+list
+mark 2
+list
+mark 3
+list
+unmark 3
+list
+bye
