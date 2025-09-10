@@ -1,3 +1,15 @@
+package penguin.app;
+
+import penguin.task.Deadline;
+import penguin.task.Event;
+import penguin.task.TaskList;
+import penguin.task.ToDo;
+import penguin.exception.PenguinException;
+import penguin.exception.PenguinUnknownCommandException;
+import penguin.exception.PenguinEmptyDescriptionException;
+import penguin.exception.PenguinParseException;
+import penguin.exception.PenguinInvalidIndexException;
+
 import java.util.Scanner;
 
 public class Penguin {

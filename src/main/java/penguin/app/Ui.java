@@ -1,3 +1,7 @@
+package penguin.app;
+
+import penguin.task.Task;
+
 public class Ui {
     public static final int WIDTH = 58;
     public static final String DIV = "─".repeat(WIDTH);

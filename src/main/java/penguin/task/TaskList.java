@@ -1,3 +1,11 @@
+package penguin.task;
+
+import penguin.exception.PenguinException;
+import penguin.exception.PenguinInvalidIndexException;
+import penguin.exception.PenguinStorageFullException;
+
+
+
 public class TaskList {
     private static final int CAPACITY = 100;
     private final Task[] tasks = new Task[CAPACITY];
