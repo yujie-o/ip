@@ -81,14 +81,17 @@ public class Penguin {
                         break;
                     }
 
+                    case "help": {
+                        Ui.showManual();
+                        break;
+                    }
+
                     default:
                         throw new PenguinUnknownCommandException(command);
                     }
 
                 } catch (PenguinException e) {
                     Ui.showError(e.getMessage());
-                    // optional hint:
-                    // Ui.showManual();
                 }
 
                 Ui.showDivider();
