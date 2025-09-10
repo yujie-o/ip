@@ -7,10 +7,9 @@ public class TaskList {
         return index < 0 || index >= count;
     }
 
-    public void addTask(Task t) {
+    public void addTask(Task t) throws PenguinException {
         if (count >= CAPACITY) {
-            System.out.println("⚠ Sorry, task list is full (" + CAPACITY + ").");
-            return;
+            throw new PenguinStorageFullException(CAPACITY);
         }
         tasks[count++] = t;
     }
@@ -20,7 +19,6 @@ public class TaskList {
     }
 
     // --- Queries ---
-
     public void listTasks() {
         if (count == 0) {
             System.out.println("Your task list is empty.");
@@ -33,11 +31,9 @@ public class TaskList {
     }
 
     // --- Updates ---
-
-    public void markTask(int index) {
+    public void markTask(int index) throws PenguinException {
         if (outOfRange(index)) {
-            System.out.println("⚠ There is no such task number.");
-            return;
+            throw new PenguinInvalidIndexException(index + 1);
         }
         Task t = tasks[index];
         if (t.isDone) {
@@ -49,10 +45,9 @@ public class TaskList {
         }
     }
 
-    public void unmarkTask(int index) {
+    public void unmarkTask(int index) throws PenguinException {
         if (outOfRange(index)) {
-            System.out.println("⚠ There is no such task number.");
-            return;
+            throw new PenguinInvalidIndexException(index + 1);
         }
         Task t = tasks[index];
         if (t.isDone) {

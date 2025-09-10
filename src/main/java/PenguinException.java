@@ -30,6 +30,6 @@ class PenguinInvalidIndexException extends PenguinException {
 
 class PenguinStorageFullException extends PenguinException {
     public PenguinStorageFullException(int capacity) {
-        super("Sorry, task list is full (" + capacity + ").");
+        super("⚠ Sorry, task list is full (" + capacity + ").");
     }
 }
