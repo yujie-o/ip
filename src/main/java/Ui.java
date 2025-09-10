@@ -22,7 +22,6 @@ public class Ui {
     }
 
     public static void showManual() {
-        System.out.println("☹ OOPS!!! I don't understand that command.");
         System.out.println("Here are the commands you can use:\n");
 
         System.out.println("  todo <description>");
@@ -54,10 +53,9 @@ public class Ui {
         System.out.println("Usage: " + msg);
     }
 
-    public static void showTodoEmpty() {
-        System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+    public static void showError(String msg) {
+        System.out.println("☹ OOPS!!! " + msg);
     }
-
 
     public static void showDivider() {
         System.out.println(DIV);
