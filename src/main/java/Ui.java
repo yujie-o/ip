@@ -58,6 +58,9 @@ public class Ui {
         System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
     }
 
+    public static void showError(String msg) {
+        System.out.println("☹ OOPS!!! " + msg);
+    }
 
     public static void showDivider() {
         System.out.println(DIV);
