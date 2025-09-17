@@ -49,6 +49,9 @@ public class Ui {
         System.out.println("  unmark <task-number>");
         System.out.println("      Mark a task as not done.\n");
 
+        System.out.println("  delete <task-number>");
+        System.out.println("      Delete a task.\n");
+
         System.out.println("  bye");
         System.out.println("      Exit the program.\n");
     }
