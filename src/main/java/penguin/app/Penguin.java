@@ -122,6 +122,9 @@ public class Penguin {
                         System.out.println(" Noted. I've removed this task:");
                         System.out.println("   " + removed);
                         System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) {}
                         break;
                     }
 
