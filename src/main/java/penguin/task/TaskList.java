@@ -5,7 +5,6 @@ import penguin.exception.PenguinInvalidIndexException;
 import penguin.exception.PenguinStorageFullException;
 
 
-
 public class TaskList {
     private static final int CAPACITY = 100;
     private final Task[] tasks = new Task[CAPACITY];
@@ -26,6 +25,13 @@ public class TaskList {
         return count;
     }
 
+    public Task get(int index) throws PenguinException {
+        if (index < 0 || index >= count) {
+            throw new PenguinInvalidIndexException(index + 1);
+        }
+        return tasks[index];
+    }
+    
     // --- Queries ---
     public void listTasks() {
         if (count == 0) {
