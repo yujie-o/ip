@@ -18,7 +18,7 @@ public class Penguin {
     private static final String NAME = "Penguin";
 
     public static void main(String[] args) {
-        Path savePath = Paths.get("data", "duke.txt");   // relative, OS-independent
+        Path savePath = Paths.get("data", "penguin.txt");   // relative, OS-independent
         Storage storage = new Storage(savePath);
         TaskList taskList = storage.loadOrEmpty();
 
