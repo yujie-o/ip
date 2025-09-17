@@ -9,6 +9,14 @@ public class Task {
         this.isDone = false;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void markDone() {
         this.isDone = true;
     }
@@ -26,7 +34,4 @@ public class Task {
         return "[" + getStatusIcon() + "]" + " " + description;
     }
 
-    public boolean isDone() {
-        return isDone;
-    }
 }

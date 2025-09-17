@@ -17,6 +17,13 @@ public class TaskList {
         return tasks.size();
     }
 
+    public Task get(int index) throws PenguinException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new PenguinInvalidIndexException(index + 1);
+        }
+        return tasks.get(index);
+    }
+
     // --- Queries ---
     public void listTasks() {
         if (tasks.isEmpty()) {
