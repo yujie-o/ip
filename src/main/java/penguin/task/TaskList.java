@@ -2,49 +2,40 @@ package penguin.task;
 
 import penguin.exception.PenguinException;
 import penguin.exception.PenguinInvalidIndexException;
-import penguin.exception.PenguinStorageFullException;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskList {
-    private static final int CAPACITY = 100;
-    private final Task[] tasks = new Task[CAPACITY];
-    private int count = 0;
+    private final List<Task> tasks = new ArrayList<>();
 
-    private boolean outOfRange(int index) {
-        return index < 0 || index >= count;
-    }
-
-    public void addTask(Task t) throws PenguinException {
-        if (count >= CAPACITY) {
-            throw new PenguinStorageFullException(CAPACITY);
-        }
-        tasks[count++] = t;
+    public void addTask(Task t) {
+        tasks.add(t);
     }
 
     public int size() {
-        return count;
+        return tasks.size();
     }
 
     // --- Queries ---
     public void listTasks() {
-        if (count == 0) {
+        if (tasks.isEmpty()) {
             System.out.println("Your task list is empty.");
             return;
         }
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < count; i++) {
-            System.out.println((i + 1) + ". " + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.get(i));
         }
     }
 
     // --- Updates ---
     public void markTask(int index) throws PenguinException {
-        if (outOfRange(index)) {
+        if (index < 0 || index >= tasks.size()) {
             throw new PenguinInvalidIndexException(index + 1);
         }
-        Task t = tasks[index];
-        if (t.isDone) {
+        Task t = tasks.get(index);
+        if (t.isDone()) {
             System.out.println("⚠ Task " + (index + 1) + " is already marked as done.");
         } else {
             t.markDone();
@@ -54,16 +45,23 @@ public class TaskList {
     }
 
     public void unmarkTask(int index) throws PenguinException {
-        if (outOfRange(index)) {
+        if (index < 0 || index >= tasks.size()) {
             throw new PenguinInvalidIndexException(index + 1);
         }
-        Task t = tasks[index];
-        if (t.isDone) {
+        Task t = tasks.get(index);
+        if (t.isDone()) {
             t.markNotDone();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(" " + t);
         } else {
             System.out.println("⚠ Task " + (index + 1) + " is already marked as undone.");
         }
+    }
+
+    public Task deleteTask(int index) throws PenguinException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new PenguinInvalidIndexException(index + 1);
+        }
+        return tasks.remove(index);
     }
 }

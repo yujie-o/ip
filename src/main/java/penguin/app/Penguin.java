@@ -93,6 +93,18 @@ public class Penguin {
                         break;
                     }
 
+                    case "delete": {
+                        if (tokens.length < 2) {
+                            throw new PenguinParseException("Usage: delete <task-number>");
+                        }
+                        int idx = parseIndexOrThrow(tokens[1], taskList.size(), "delete <task-number>");
+                        penguin.task.Task removed = taskList.deleteTask(idx);
+                        System.out.println(" Noted. I've removed this task:");
+                        System.out.println("   " + removed);
+                        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
+                        break;
+                    }
+
                     case "help": {
                         Ui.showManual();
                         break;
@@ -112,8 +124,7 @@ public class Penguin {
     }
 
     // helper for mark/unmark parsing
-    private static int parseIndexOrThrow(String token, int size, String usageIfFail)
-            throws PenguinParseException, PenguinInvalidIndexException {
+    private static int parseIndexOrThrow(String token, int size, String usageIfFail) throws PenguinParseException, PenguinInvalidIndexException {
         if (token == null || token.isBlank()) {
             throw new PenguinParseException("Usage: " + usageIfFail);
         }
