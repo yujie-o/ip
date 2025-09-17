@@ -5,7 +5,6 @@ import penguin.exception.PenguinInvalidIndexException;
 import penguin.exception.PenguinStorageFullException;
 
 
-
 public class TaskList {
     private static final int CAPACITY = 100;
     private final Task[] tasks = new Task[CAPACITY];
@@ -20,6 +19,17 @@ public class TaskList {
             throw new PenguinStorageFullException(CAPACITY);
         }
         tasks[count++] = t;
+    }
+
+    public Task deleteTask(int index) throws PenguinException {
+        if (outOfRange(index)) throw new PenguinInvalidIndexException(index + 1);
+        Task removed = tasks[index];
+        // shift left to fill the hole
+        for (int i = index + 1; i < count; i++) {
+            tasks[i - 1] = tasks[i];
+        }
+        tasks[--count] = null; // avoid loitering
+        return removed;
     }
 
     public int size() {
