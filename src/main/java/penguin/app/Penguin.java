@@ -11,12 +11,17 @@ import penguin.exception.PenguinParseException;
 import penguin.exception.PenguinInvalidIndexException;
 
 import java.util.Scanner;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Penguin {
     private static final String NAME = "Penguin";
 
     public static void main(String[] args) {
-        TaskList taskList = new TaskList();
+        Path savePath = Paths.get("data", "duke.txt");   // relative, OS-independent
+        Storage storage = new Storage(savePath);
+        TaskList taskList = storage.loadOrEmpty();
+
         Ui.showGreeting(NAME);
 
         try (Scanner in = new Scanner(System.in)) {
@@ -46,12 +51,18 @@ public class Penguin {
                     case "mark": {
                         int index = parseIndexOrThrow(payload, taskList.size(), "mark <task-number>");
                         taskList.markTask(index);
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) { }
                         break;
                     }
 
                     case "unmark": {
                         int index = parseIndexOrThrow(payload, taskList.size(), "unmark <task-number>");
                         taskList.unmarkTask(index);
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) { }
                         break;
                     }
 
@@ -63,6 +74,9 @@ public class Penguin {
                         ToDo todo = new ToDo(description);
                         taskList.addTask(todo);
                         Ui.showAdded(todo, taskList.size());
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) { }
                         break;
                     }
 
@@ -74,6 +88,9 @@ public class Penguin {
                         Deadline deadline = new Deadline(byTokens[0].trim(), byTokens[1].trim());
                         taskList.addTask(deadline);
                         Ui.showAdded(deadline, taskList.size());
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) { }
                         break;
                     }
 
@@ -90,6 +107,9 @@ public class Penguin {
                         Event eventTask = new Event(description, startEndTokens[0].trim(), startEndTokens[1].trim());
                         taskList.addTask(eventTask);
                         Ui.showAdded(eventTask, taskList.size());
+                        try {
+                            storage.save(taskList);
+                        } catch (Exception ignored) { }
                         break;
                     }
 
