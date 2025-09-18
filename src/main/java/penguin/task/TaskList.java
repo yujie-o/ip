@@ -71,4 +71,9 @@ public class TaskList {
         }
         return tasks.remove(index);
     }
+
+    public List<Task> getAllTasks() {
+        return new ArrayList<>(tasks); // return a copy so caller can't modify internals
+    }
+
 }

@@ -5,7 +5,8 @@ import penguin.app.Ui;
 import penguin.task.TaskList;
 
 public class HelpCommand extends Command {
-    @Override public void execute(TaskList tasks, Ui ui, Storage storage) {
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         Ui.showManual();
     }
 }

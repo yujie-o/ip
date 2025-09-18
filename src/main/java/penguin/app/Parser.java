@@ -5,9 +5,6 @@ import penguin.exception.PenguinEmptyDescriptionException;
 import penguin.exception.PenguinParseException;
 
 public final class Parser {
-    private Parser() {
-    }
-
     public static Command parse(String fullCommand) throws penguin.exception.PenguinException {
         if (fullCommand == null || fullCommand.isBlank()) {
             throw new PenguinParseException("You typed nothing. Try one of: todo, deadline, event, list, mark, unmark, delete, help, bye.");
@@ -19,15 +16,19 @@ public final class Parser {
         switch (cmd) {
         case "bye":
             return new ExitCommand();
+
         case "help":
             return new HelpCommand();
+
         case "list":
             return new ListCommand();
 
         case "mark":
             return IndexCommand.ofMark(payload);
+
         case "unmark":
             return IndexCommand.ofUnmark(payload);
+
         case "delete":
             return IndexCommand.ofDelete(payload);
 
@@ -36,6 +37,7 @@ public final class Parser {
             if (desc.isEmpty()) throw new PenguinEmptyDescriptionException("todo");
             return new AddTodoCommand(desc);
         }
+
         case "deadline": {
             String[] p = payload.split("\\s*/by\\s*", 2);
             if (p.length < 2 || p[0].isBlank() || p[1].isBlank()) {
@@ -43,6 +45,7 @@ public final class Parser {
             }
             return new AddDeadlineCommand(p[0].trim(), p[1].trim());
         }
+
         case "event": {
             String[] p1 = payload.split("\\s*/from\\s*", 2);
             if (p1.length < 2 || p1[0].isBlank()) {
@@ -54,6 +57,9 @@ public final class Parser {
             }
             return new AddEventCommand(p1[0].trim(), p2[0].trim(), p2[1].trim());
         }
+
+        case "on":
+            return new OnCommand(payload);
 
         default:
             return new UnknownCommand(cmd);
