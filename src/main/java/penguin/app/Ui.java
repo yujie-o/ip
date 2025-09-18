@@ -7,19 +7,28 @@ import java.util.Scanner;
 public class Ui {
     public static final int WIDTH = 58;
     public static final String DIV = "─".repeat(WIDTH);
-    /** Keep prompt static so callers can print it without a Ui reference. */
+    /**
+     * Keep prompt static so callers can print it without a Ui reference.
+     */
     public static final String PROMPT = "➤ ";
 
     private final Scanner in = new Scanner(System.in);
 
-    /** Read one line of user input. */
+    /**
+     * Read one line of user input.
+     */
     public String readCommand() {
         return in.nextLine();
     }
 
-    /** Optional: close input stream on exit. */
+    /**
+     * Optional: close input stream on exit.
+     */
     public void close() {
-        try { in.close(); } catch (Exception ignored) { }
+        try {
+            in.close();
+        } catch (Exception ignored) {
+        }
     }
 
     public void showGreeting(String name) {

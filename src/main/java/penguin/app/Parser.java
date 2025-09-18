@@ -58,8 +58,16 @@ public final class Parser {
             return new AddEventCommand(p1[0].trim(), p2[0].trim(), p2[1].trim());
         }
 
-        case "on":
+        case "on": {
             return new OnCommand(payload);
+        }
+
+        case "find": {
+            if (payload.isBlank()) {
+                throw new penguin.exception.PenguinParseException("Usage: find <keyword>");
+            }
+            return new penguin.command.FindCommand(payload.trim());
+        }
 
         default:
             return new UnknownCommand(cmd);
