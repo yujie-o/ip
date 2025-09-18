@@ -6,6 +6,12 @@ import penguin.task.TaskList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Main entry point of the Penguin task manager.
+ * <p>
+ * Coordinates storage, task list, and user interface.
+ * Responsible for the application lifecycle (run loop).
+ */
 public class Penguin {
     private static final String NAME = "Penguin";
 
@@ -13,22 +19,30 @@ public class Penguin {
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructs a new Penguin app.
+     *
+     * @param filePath path to the storage file (relative or absolute)
+     */
     public Penguin(String filePath) {
-        this.ui = new Ui();                    // instance Ui (correct now)
+        this.ui = new Ui();
         Path savePath = Paths.get(filePath);
         this.storage = new Storage(savePath);
         this.tasks = storage.loadOrEmpty();
     }
 
+    /**
+     * Runs the main program loop until user exits.
+     */
     public void run() {
         ui.showGreeting(NAME);
         boolean isExit = false;
 
         while (!isExit) {
-            System.out.print(Ui.PROMPT);       // static prompt is fine
+            System.out.print(Ui.PROMPT);
             String fullCommand = ui.readCommand();
 
-            Ui.showDivider();                  // opening divider for this command
+            Ui.showDivider();
             try {
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
@@ -37,14 +51,19 @@ public class Penguin {
                 Ui.showError(e.getMessage());
             }
 
-            if (!isExit) {                     // no trailing divider after 'bye'
+            if (!isExit) {
                 Ui.showDivider();
             }
         }
 
-        ui.close();                            // tidy up input
+        ui.close();
     }
 
+    /**
+     * Program entry point.
+     *
+     * @param args command line arguments (unused)
+     */
     public static void main(String[] args) {
         new Penguin("data/penguin.txt").run();
     }

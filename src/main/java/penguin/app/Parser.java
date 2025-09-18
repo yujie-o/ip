@@ -4,7 +4,17 @@ import penguin.command.*;
 import penguin.exception.PenguinEmptyDescriptionException;
 import penguin.exception.PenguinParseException;
 
+/**
+ * Parses user input strings into {@link Command} objects.
+ */
 public final class Parser {
+    /**
+     * Parses a raw user command string into a specific {@link Command}.
+     *
+     * @param fullCommand raw user input
+     * @return a Command ready to execute
+     * @throws PenguinParseException if input is invalid
+     */
     public static Command parse(String fullCommand) throws penguin.exception.PenguinException {
         if (fullCommand == null || fullCommand.isBlank()) {
             throw new PenguinParseException("You typed nothing. Try one of: todo, deadline, event, list, mark, unmark, delete, help, bye.");

@@ -1,5 +1,8 @@
 package penguin.task;
 
+/**
+ * A simple task without time information.
+ */
 public class ToDo extends Task {
 
     public ToDo(String description) {

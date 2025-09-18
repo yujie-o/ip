@@ -7,12 +7,17 @@ import penguin.task.Task;
 import penguin.task.TaskList;
 
 /**
- * Finds tasks whose description contains a given keyword (case-insensitive).
- * Usage: find <keyword>
+ * Command to find tasks containing a given keyword.
  */
 public class FindCommand extends Command {
     private final String keyword;
 
+
+    /**
+     * Creates a find command with the specified keyword.
+     *
+     * @param keyword search term (case-insensitive)
+     */
     public FindCommand(String keyword) {
         this.keyword = keyword.toLowerCase();
     }

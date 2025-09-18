@@ -6,6 +6,10 @@ import penguin.exception.PenguinInvalidIndexException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a list of tasks.
+ * Provides operations to add, remove, and access tasks.
+ */
 public class TaskList {
     private final List<Task> tasks = new ArrayList<>();
 

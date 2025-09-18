@@ -4,25 +4,26 @@ import penguin.task.Task;
 
 import java.util.Scanner;
 
+/**
+ * Handles all user input and output.
+ * Acts as the boundary between user commands and program logic.
+ */
 public class Ui {
     public static final int WIDTH = 58;
     public static final String DIV = "─".repeat(WIDTH);
-    /**
-     * Keep prompt static so callers can print it without a Ui reference.
-     */
     public static final String PROMPT = "➤ ";
 
     private final Scanner in = new Scanner(System.in);
 
     /**
-     * Read one line of user input.
+     * Reads a line of input from the user.
      */
     public String readCommand() {
         return in.nextLine();
     }
 
     /**
-     * Optional: close input stream on exit.
+     * Closes the scanner safely.
      */
     public void close() {
         try {
@@ -31,6 +32,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints greeting message.
+     */
     public void showGreeting(String name) {
         showDivider();
         System.out.println("Hello! I'm " + name + ".");
@@ -38,17 +42,29 @@ public class Ui {
         showDivider();
     }
 
+    /**
+     * Prints exit message.
+     */
     public static void showBye() {
         System.out.println("Bye. Hope to see you again soon!");
         showDivider();
     }
 
+    /**
+     * Prints confirmation after a task has been added.
+     *
+     * @param t     the task added
+     * @param count number of tasks now in the list
+     */
     public static void showAdded(Task t, int count) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + t);
         System.out.println("Now you have " + count + " tasks in the list.");
     }
 
+    /**
+     * Prints the help manual with all available commands.
+     */
     public static void showManual() {
         System.out.println("Here are the commands you can use:");
         System.out.println("  (Note: Dates must be entered in yyyy-MM-dd format.");
@@ -96,10 +112,18 @@ public class Ui {
         System.out.println("      Exit the program.\n");
     }
 
+    /**
+     * Prints an error message.
+     *
+     * @param msg explanation of the error
+     */
     public static void showError(String msg) {
         System.out.println("☹ OOPS!!! " + msg);
     }
 
+    /**
+     * Prints a divider line.
+     */
     public static void showDivider() {
         System.out.println(DIV);
     }

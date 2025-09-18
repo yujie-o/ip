@@ -6,14 +6,26 @@ import penguin.task.*;
 import java.io.*;
 import java.nio.file.*;
 
+/**
+ * Handles loading and saving of tasks to a file.
+ */
 public class Storage {
     private final Path path;
 
+    /**
+     * Constructs a storage handler for the given path.
+     *
+     * @param path path of the save file
+     */
     public Storage(Path path) {
         this.path = path;
     }
 
-    // Load; if file doesn't exist yet, return an empty list
+    /**
+     * Loads tasks from file if it exists, otherwise returns an empty list.
+     *
+     * @return a TaskList containing the saved tasks, or empty list
+     */
     public TaskList loadOrEmpty() {
         TaskList list = new TaskList();
         if (Files.notExists(path)) return list;
@@ -33,7 +45,6 @@ public class Storage {
         return list;
     }
 
-    // Save current list to disk (overwrite)
     public void save(TaskList list) throws IOException {
         ensureFileExists();
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {
