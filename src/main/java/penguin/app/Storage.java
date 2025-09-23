@@ -6,11 +6,19 @@ import penguin.task.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Handles loading and saving of tasks to a file.
  */
 public record Storage(Path path) {
+
+    // Storage format: ISO_LOCAL_DATE_TIME (e.g., 2019-12-02T18:00)
+    private static final DateTimeFormatter STORAGE_DT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    // User input format expected by constructors (e.g., 2019-12-02 1800)
+    private static final DateTimeFormatter USER_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
     /**
      * Constructs a storage handler for the given path.
      *
@@ -62,20 +70,22 @@ public record Storage(Path path) {
         if (Files.notExists(path)) Files.createFile(path);
     }
 
-    // ---------- Simple text format ----------
+    // ---------- Text format ----------
     // T | 1 | read book
-    // D | 0 | return book | June 6th
-    // E | 0 | project meeting | Aug 6th 2-4pm
+    // D | 0 | return book | 2019-12-02T18:00
+    // E | 0 | project meeting | 2019-12-01T09:00 | 2019-12-01T11:00
 
     private String toLine(Task t) throws PenguinException {
         String done = t.isDone() ? "1" : "0";
         if (t instanceof ToDo) {
             return String.join(" | ", "T", done, t.getDescription());
         } else if (t instanceof Deadline d) {
-            return String.join(" | ", "D", done, d.getDescription(), d.getByDateTime().toString());
+            return String.join(" | ", "D", done, d.getDescription(),
+                    d.getByDateTime().format(STORAGE_DT));
         } else if (t instanceof Event e) {
             return String.join(" | ", "E", done, e.getDescription(),
-                    e.getFromDateTime().toString(), e.getToDateTime().toString());
+                    e.getFromDateTime().format(STORAGE_DT),
+                    e.getToDateTime().format(STORAGE_DT));
         } else {
             throw new PenguinException("Unknown task type: " + t.getClass().getSimpleName());
         }
@@ -95,19 +105,27 @@ public record Storage(Path path) {
             return t;
         }
         case "D": {
-            Deadline d = new Deadline(p[2], p[3]);
+            if (p.length < 4) throw new IllegalArgumentException("bad deadline: " + line);
+            // parse ISO from storage, format to user string for constructor
+            LocalDateTime by = LocalDateTime.parse(p[3], STORAGE_DT);
+            Deadline d = new Deadline(p[2], by.format(USER_DT));
             if (done) d.markDone();
             return d;
         }
         case "E": {
-            Event e = new Event(p[2], p[3], p[4]);
+            if (p.length < 5) throw new IllegalArgumentException("bad event: " + line);
+            LocalDateTime from = LocalDateTime.parse(p[3], STORAGE_DT);
+            LocalDateTime to   = LocalDateTime.parse(p[4], STORAGE_DT);
+            Event e = new Event(
+                    p[2],
+                    from.format(USER_DT),
+                    to.format(USER_DT)
+            );
             if (done) e.markDone();
             return e;
         }
-
         default:
             throw new IllegalArgumentException("unknown type: " + type);
         }
     }
-
 }
