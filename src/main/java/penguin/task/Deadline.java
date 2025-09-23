@@ -1,5 +1,6 @@
 package penguin.task;
 
+import penguin.exception.PenguinParseException;
 import penguin.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class Deadline extends Task {
      * @param byString    date/time string (see accepted formats above)
      * @throws IllegalArgumentException if the date/time cannot be parsed
      */
-    public Deadline(String description, String byString) {
+    public Deadline(String description, String byString) throws PenguinParseException {
         super(description);
         this.by = DateTimeUtil.parseDateTime(byString);
     }

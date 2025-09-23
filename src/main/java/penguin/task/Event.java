@@ -1,5 +1,6 @@
 package penguin.task;
 
+import penguin.exception.PenguinParseException;
 import penguin.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class Event extends Task {
      * @param toString    end date/time string
      * @throws IllegalArgumentException if either date/time cannot be parsed
      */
-    public Event(String description, String fromString, String toString) {
+    public Event(String description, String fromString, String toString) throws PenguinParseException {
         super(description);
         this.from = DateTimeUtil.parseDateTime(fromString);
         this.to = DateTimeUtil.parseDateTime(toString);

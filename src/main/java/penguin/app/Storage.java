@@ -1,6 +1,7 @@
 package penguin.app;
 
 import penguin.exception.PenguinException;
+import penguin.exception.PenguinParseException;
 import penguin.task.*;
 
 import java.io.*;
@@ -9,16 +10,13 @@ import java.nio.file.*;
 /**
  * Handles loading and saving of tasks to a file.
  */
-public class Storage {
-    private final Path path;
-
+public record Storage(Path path) {
     /**
      * Constructs a storage handler for the given path.
      *
      * @param path path of the save file
      */
-    public Storage(Path path) {
-        this.path = path;
+    public Storage {
     }
 
     /**
@@ -83,8 +81,7 @@ public class Storage {
         }
     }
 
-
-    private static Task parse(String line) {
+    private static Task parse(String line) throws PenguinParseException {
         String[] p = line.split("\\s*\\|\\s*");
         if (p.length < 3) throw new IllegalArgumentException("bad line: " + line);
 
@@ -107,7 +104,6 @@ public class Storage {
             if (done) e.markDone();
             return e;
         }
-
 
         default:
             throw new IllegalArgumentException("unknown type: " + type);

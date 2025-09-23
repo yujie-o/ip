@@ -8,6 +8,9 @@ import penguin.exception.PenguinParseException;
 import penguin.task.Task;
 import penguin.task.TaskList;
 
+/**
+ * Base for commands that operate on a single task index (mark/unmark/delete).
+ */
 public class IndexCommand extends Command {
     public enum Kind {MARK, UNMARK, DELETE}
 
