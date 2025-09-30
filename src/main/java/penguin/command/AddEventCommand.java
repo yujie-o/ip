@@ -3,7 +3,8 @@ package penguin.command;
 import penguin.app.Storage;
 import penguin.app.Ui;
 import penguin.exception.PenguinParseException;
-import penguin.task.*;
+import penguin.task.Event;
+import penguin.task.TaskList;
 
 /**
  * Adds an {@link Event} task to the list.
